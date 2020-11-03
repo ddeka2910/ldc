@@ -39,6 +39,35 @@ matrix:
       osx_image: xcode11.3
       d: ldc-beta
       env: LLVM_VERSION=7.0.0 OPTS="-DBUILD_SHARED_LIBS=OFF"
+    #powerjobs
+    - os: linux
+      arch: ppc64le
+      d: ldc-beta
+      env: LLVM_VERSION=11.0.0 PARALLELISM=16 CC=gcc-8 CXX=g++-8 OPTS="-DLDC_INSTALL_LLVM_RUNTIME_LIBS_ARCH=aarch64 -DADDITIONAL_DEFAULT_LDC_SWITCHES='\"-linker=bfd\",' -DCOMPILE_ALL_D_FILES_AT_ONCE=OFF"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - gdb
+            - ninja-build
+    - os: linux
+      arch: ppc64le
+      d: ldc-beta
+      env: LLVM_VERSION=9.0.0 OPTS="-DBUILD_SHARED_LIBS=ON -DRT_SUPPORT_SANITIZERS=ON"
+    - os: linux
+      arch: ppc64le
+      d: ldc-0.17.6
+      env: LLVM_VERSION=8.0.0 OPTS="-DBUILD_SHARED_LIBS=OFF -DLDC_LINK_MANUALLY=ON"
+    # FIXME: strange crashes, possibly due to C++ compiler mismatch
+    #- os: linux
+    #  d: ldc
+    #  env: LLVM_VERSION=7.0.1 OPTS="-DBUILD_SHARED_LIBS=ON"
+    - os: linux
+      arch: ppc64le
+      d: dmd-beta
+      env: LLVM_VERSION=6.0.1 OPTS="-DLIB_SUFFIX=64 -DLDC_LINK_MANUALLY=ON"    
 
 cache:
   directories:
